@@ -1,0 +1,48 @@
+body{
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* créer la zone de jeu */
+#game-board{
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin: 30px auto;
+    border: 2px solid;
+}
+
+/* Masquer les cartes*/
+.card {
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+
+    /*animation*/
+    transform: rotateY(0deg);
+    transition: all 0.5s;
+}
+.card .card-content {
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+/*Animation de la carte*/
+.card.flip{
+    transform: rotateY(180deg) ;
+}
+
+/* Retourner une carte*/
+.card.flip .card-content{
+    opacity: 1;
+    max-width: 100%;
+}
+
+/* Quand on trouve */
+.card.matched{
+    border: solid 4px green;
+    box-sizing: border-box;
+    cursor: default;
+}

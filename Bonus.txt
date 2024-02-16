@@ -1,0 +1,15 @@
+Il reste encore beaucoup de fonctionnalités potentielles à implémenter, en voici quelques-unes :
+
+Mettre un chronomètre : lancer un chronomètre en JS au début de la partie, 
+et afficher le temps à la fin de la partie pour donner un score à l’utilisateur.
+
+Ajouter la possibilité de recommencer une partie sans rafraîchir la page : pour cela, 
+il suffit d’ajouter un bouton permettant de régénérer le plateau et de remettre à 0 toutes 
+vos variables de jeu.
+
+Bloquer les clics pendant la seconde d’attente : pendant la seconde d’attente avant de valider une paire, 
+ou de retourner les cartes, on peut encore cliquer sur les autres cartes, c’est un bug qui pourrait 
+compromettre le bon déroulement de la partie.
+
+Stocker les précédents scores en cookie : pour faire une moyenne des scores et établir un meilleur score 
+personnel à battre, on pourrait stocker les scores en cookie pour pouvoir faire des statistiques dessus.
