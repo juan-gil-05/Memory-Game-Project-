@@ -4,8 +4,8 @@
   "requires": true,
   "packages": {},
   "engines": {
-    "node" : "20.x",
-    "npm": "10.x",
+    "node" : "18.x",
+    "npm": "8.x",
     "yarn": "1.x"
   },
   "scripts": {
