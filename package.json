@@ -4,10 +4,12 @@
   "requires": true,
   "packages": {},
   "engines": {
-    "node" : "20.x"
+    "node" : "20.x",
+    "npm": "10.x",
+    "yarn": "1.x"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node script.js",
+    "build": "webpack"
   }
-  
 }
