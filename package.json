@@ -5,8 +5,7 @@
   "packages": {},
   "engines": {
     "node" : "18.x",
-    "npm": "8.x",
-    "yarn": "1.x"
+    "npm": "8.x"
   },
   "scripts": {
     "start": "node script.js",
