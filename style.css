@@ -10,7 +10,7 @@ body{
     grid-template-rows: repeat(4, 100px);
     gap: 10px;
     justify-content: center;
-    margin: 30px auto;
+    margin: 20px auto;
     border: 2px solid;
 }
 
@@ -45,4 +45,15 @@ body{
     border: solid 4px green;
     box-sizing: border-box;
     cursor: default;
+}
+
+/*Chronomètre*/
+.chrono{
+    border: solid 2px black;
+    padding: 15px;
+    margin: 0px 30%;
+    text-align: center;
+    background-color: #c2c6ff;
+    border-radius: 15px;
+    font-size: 2rem;
 }

@@ -4,11 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <title>Jeu de Memory</title>
 </head>
 <body>
     <h1>Jeu de Memory</h1>
     <div id="game-board"></div>
+
+    <!-- Chronomètre du jeu -->
+    <div class="chrono">
+        <div class="time">
+            <span>0h</span>
+            <span>0min</span>
+            <span>0s</span>
+            <span>0ms</span>
+        </div>
+        <div class="controls">
+            <button class="start" onclick="start()">Démarrer le jeu</button>
+            <button class="stop" onclick="stop()">Pause</button>
+            <button class="reset" onclick="reset()">Redémarrer le jeu</button>
+        </div>
+    </div>
+
+
+
+
     <script src="./script.js"></script>
 </body>
 </html>
