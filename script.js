@@ -10,10 +10,19 @@ const cards = [
     'https://picsum.photos/id/244/100/100'
 ];
 // On appele l'element game-board
-const gameBoard = document.getElementById('game-board');
+const gameBoard = document.querySelector('.game-board');
 // Tableu de cartes cilquées
 let selectedCards = []
-
+//variables dont on a besoin pour chronomètre
+let sp, btn_start, btn_stop, t, h, mn, s, ms
+//function pour initialiser les variables quand la page se récharche
+window.onload = function(){
+    sp = document.getElementsByTagName("span")
+    btn_start = document.querySelector('.start')
+    btn_stop = document.querySelector('.stop')
+    t
+    h=0, mn=0, s=0, ms=0
+}
 
 // Fonction pour créer les cartes avec les images 
 function createCard(CardUrl) {
@@ -26,7 +35,7 @@ function createCard(CardUrl) {
     cardContent.src = `${CardUrl}`;
     card.appendChild(cardContent);
 
-    // On met un listener pour retourner la carte cliquée 
+    // On met un listener pour retourner la carte cliquée
     card.addEventListener('click', onCardClick)
     return card;
 }
@@ -49,7 +58,7 @@ function shuffleArray(arrayToShuffle) {
 let allCards = duplicateArray(cards)
 allCards = shuffleArray(allCards)
 
-// Affichage des cartes à l'utilisateur 
+// Afficher les cartes à l'utilisateur 
 allCards.forEach(card => {
     const cardHtml = createCard(card)
     gameBoard.appendChild(cardHtml)
@@ -73,7 +82,10 @@ function onCardClick(e) {
                 // methode pour savoir si l'utilisateur a gangé avec un delai
                 setTimeout(() => {
                     const allCardsNotMatched = document.querySelectorAll('.card:not(.matched)')
-                    if(allCardsNotMatched.length == 0) alert ('Bravo vous avez gagné')
+                    if(allCardsNotMatched.length == 0) {
+                        alert ('Bravo vous avez gagné en: '+h+"h:"+mn+"min:"+s+"seg:"+ms+"ms")
+                        stop()
+                    }
                 },1000)
             }
             else{
@@ -90,17 +102,6 @@ function onCardClick(e) {
 //--------------------------------------------------------------------------------------------------------------
 
 //Le chronomètre
-
-//variables dont on a besoin
-let sp, btn_start, btn_stop, t, h, mn, s, ms
-//function pour initialiser les variables quand la page se récharche
-window.onload = function(){
-    sp = document.getElementsByTagName("span")
-    btn_start = document.querySelector('.start')
-    btn_stop = document.querySelector('.stop')
-    t
-    h=0, mn=0, s=0, ms=0
-}
 //metre en place le compteur
 function update_chrono(){
     ms+=1
@@ -129,10 +130,12 @@ function start(){
     //Tous les 100 ms
     t = setInterval(update_chrono, 100)
     btn_start.disabled = true
+    //on enléve la class empty-board pour voir le game-board 
+    gameBoard.classList.remove('empty-board')
 }
 //stopper le chronomètre 
 function stop(){
-    clearInterval(t) //supression de l'intervale t que nous avions crée
+    clearInterval(t) //supression de l'intervale que nous avions crée
     btn_start.disabled = false
 }
 //initialisér les valeurs du compteur
@@ -140,9 +143,12 @@ function reset(){
     clearInterval(t)
     btn_start.disabled = false
     h=0, mn=0, s=0, ms=0
+    //recharge de la page (donc du jeu)
+    location.reload()
     //insérer ces nouvelles valeurs dans les span
     sp[0].innerHTML = h + "h"
     sp[1].innerHTML = mn + "mn"
     sp[2].innerHTML = s + "s"
     sp[3].innerHTML = ms + "ms"
 }
+
