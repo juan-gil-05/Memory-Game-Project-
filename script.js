@@ -15,7 +15,7 @@ const gameBoard = document.querySelector('.game-board');
 let selectedCards = []
 //variables dont on a besoin pour chronomètre
 let sp, btn_start, btn_stop, t, h, mn, s, ms
-//function pour initialiser les variables quand la page se récharche
+//function pour initialiser les variables du chronomètre quand la page se récharche
 window.onload = function(){
     sp = document.getElementsByTagName("span")
     btn_start = document.querySelector('.start')
@@ -54,7 +54,7 @@ function shuffleArray(arrayToShuffle) {
     return arrayShuffled
 }
 
-//melanger les cartes
+//mélanger les cartes
 let allCards = duplicateArray(cards)
 allCards = shuffleArray(allCards)
 
@@ -68,9 +68,22 @@ allCards.forEach(card => {
 function onCardClick(e) {
     const card = e.target.parentElement
     card.classList.add('flip')
-    // Fonction pour identifier si on a trouve une paire ou pas
     selectedCards.push(card)
+    //si la carte est tourné on ne peut pas la toucher
+    const cardsFlipped = document.querySelectorAll(".card:is(.flip)")
+    if(cardsFlipped){
+        cardsFlipped.forEach(card => {
+            card.removeEventListener('click', onCardClick)
+        })
+    }   
+    // Fonction pour identifier si on a trouve une paire ou pas    
     if (selectedCards.length == 2){
+        //On ne permet pas à l'utilisateur de tourner les autres cartes
+        //lorsque deux cartes sont déjà tourné
+        const totalCards = document.querySelectorAll(".card")
+        totalCards.forEach(card => {
+            card.removeEventListener('click', onCardClick)
+        })
         // On met du temps pour que l'utilisateur puisse voir la deuxième carte
         setTimeout(() => {
             if (selectedCards[0].dataset.value == selectedCards[1].dataset.value){
@@ -83,7 +96,8 @@ function onCardClick(e) {
                 setTimeout(() => {
                     const allCardsNotMatched = document.querySelectorAll('.card:not(.matched)')
                     if(allCardsNotMatched.length == 0) {
-                        alert ('Bravo vous avez gagné en: '+h+"h:"+mn+"min:"+s+"seg:"+ms+"ms")
+                        alert ('Bravo vous avez gagné en: '+h+"h:"+mn+"min:"+s+"seg:"+ms+"ms\nVotre score est de = "+score+" pt")
+                        //On arrêt le chronomètre
                         stop()
                     }
                 },1000)
@@ -91,19 +105,22 @@ function onCardClick(e) {
             else{
                 //On s'est trompé
                 selectedCards[0].classList.remove('flip')
-                selectedCards[1].classList.remove('flip')
-                
+                selectedCards[1].classList.remove('flip')            
             }
+            //Réset du tableu pour continuer à jouer 
             selectedCards = []
+            const totalCardsNotMatched = document.querySelectorAll('.card:not(.matched):not(.flip)')
+            totalCardsNotMatched.forEach(card => {
+            card.addEventListener('click', onCardClick)
+            })
         }, 1000)
-    }
-}
+}}
 
 //--------------------------------------------------------------------------------------------------------------
 
-//Le chronomètre
 //metre en place le compteur
 function update_chrono(){
+    //Le chronomètre
     ms+=1
     if(ms == 10){
         ms = 1
@@ -152,3 +169,16 @@ function reset(){
     sp[3].innerHTML = ms + "ms"
 }
 
+//Méthode de ponctuation
+let score = 0
+if(s < 30){
+    score += 500
+}else if(mn <= 1 & s > 30){
+    score += 400
+}else if(mn <= 2 & mn > 1){
+    score += 300
+}else if(mn <= 3 & mn > 2){
+    score += 200
+}else if(mn <= 4 & mn >3){
+    score += 100
+}
