@@ -14,11 +14,12 @@ const gameBoard = document.querySelector('.game-board');
 // Tableu de cartes cilquées
 let selectedCards = []
 //variables dont on a besoin pour chronomètre
-let sp, btn_start, btn_stop, t, h, mn, s, ms
+let sp, btn_start, btn_stop, btn_pause,t, h, mn, s, ms
 //function pour initialiser les variables du chronomètre quand la page se récharche
 window.onload = function(){
     sp = document.getElementsByTagName("span")
     btn_start = document.querySelector('.start')
+    btn_pause = document.querySelector('.pause')
     btn_stop = document.querySelector('.stop')
     t
     h=0, mn=0, s=0, ms=0
@@ -96,7 +97,7 @@ function onCardClick(e) {
                 setTimeout(() => {
                     const allCardsNotMatched = document.querySelectorAll('.card:not(.matched)')
                     if(allCardsNotMatched.length == 0) {
-                        alert ('Bravo vous avez gagné en: '+h+"h:"+mn+"min:"+s+"seg:"+ms+"ms\nVotre score est de = "+score+" pt")
+                        alert ('Bravo vous avez gagné en: '+h+"h:"+mn+"min:"+s+"seg:"+ms+"ms")
                         //On arrêt le chronomètre
                         stop()
                     }
@@ -147,13 +148,33 @@ function start(){
     //Tous les 100 ms
     t = setInterval(update_chrono, 100)
     btn_start.disabled = true
+    // btn_stop.disabled = true
     //on enléve la class empty-board pour voir le game-board 
     gameBoard.classList.remove('empty-board')
+}
+//pauser le chronomètre
+function pause(){
+    clearInterval(t) // On pause le chronomètre
+    btn_start.disabled = false
 }
 //stopper le chronomètre 
 function stop(){
     clearInterval(t) //supression de l'intervale que nous avions crée
     btn_start.disabled = false
+    //Méthode ponctoation
+    let score = 0
+    if(s < 30){
+        score += 500
+    }else if(mn <= 1 && s > 30){
+        score += 400
+    }else if(mn <= 2 && mn > 1){
+        score += 300
+    }else if(mn <= 3 && mn > 2){
+        score += 200
+    }else if(mn <= 4 && mn >3){
+        score += 100
+    }
+    alert('Votre score est de = '+score+" pt")
 }
 //initialisér les valeurs du compteur
 function reset(){
@@ -169,16 +190,3 @@ function reset(){
     sp[3].innerHTML = ms + "ms"
 }
 
-//Méthode de ponctuation
-let score = 0
-if(s < 30){
-    score += 500
-}else if(mn <= 1 & s > 30){
-    score += 400
-}else if(mn <= 2 & mn > 1){
-    score += 300
-}else if(mn <= 3 & mn > 2){
-    score += 200
-}else if(mn <= 4 & mn >3){
-    score += 100
-}
