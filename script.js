@@ -59,7 +59,7 @@ function shuffleArray(arrayToShuffle) {
 let allCards = duplicateArray(cards)
 allCards = shuffleArray(allCards)
 
-// Afficher les cartes à l'utilisateur 
+// Afficher les cartes à l'utilisateur
 allCards.forEach(card => {
     const cardHtml = createCard(card)
     gameBoard.appendChild(cardHtml)
@@ -148,14 +148,25 @@ function start(){
     //Tous les 100 ms
     t = setInterval(update_chrono, 100)
     btn_start.disabled = true
-    // btn_stop.disabled = true
     //on enléve la class empty-board pour voir le game-board 
     gameBoard.classList.remove('empty-board')
+    //On enléve la class paused pour continuer le jeu
+    totalCartas = document.querySelectorAll('.card')
+    totalCartas.forEach(card => {
+        card.classList.remove('paused')
+        card.addEventListener('click', onCardClick)
+    })
 }
 //pauser le chronomètre
 function pause(){
     clearInterval(t) // On pause le chronomètre
     btn_start.disabled = false
+    //On enléve le event des cartes
+    allCards = document.querySelectorAll('.card')
+    allCards.forEach(card => {
+        card.removeEventListener('click', onCardClick)
+        card.classList.add('paused')
+    })
 }
 //stopper le chronomètre 
 function stop(){
